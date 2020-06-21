@@ -25,7 +25,7 @@ public class Client {
                 // handle exception
             }
 
-        } catch (Exception e){}//MalformedURLException}
+        } catch (Exception e){}
     }
 
     public static void main(String[] args) {

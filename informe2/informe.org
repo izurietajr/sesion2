@@ -31,23 +31,111 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 \end{verbatim}
 
-Las clases BufferedReader y InputStreamReader nos permitirán manejar el stream de datos
+La clase BufferedInputStream nos permitirán manejar el stream de datos
 que interpretaremos como el archivo descargado desde el servidor.
+Este archivo, lo podremos guardar haciendo uso de la clase FileOutputStream.
 HttpURLConnection nos permitirá realizar una conexión http con el servidor,
 usando la url que instanciaremos usando la clase URL.
+Finalmente, la clase IOException nos permitirá obtener las excepciones provenientes de la lectura del archivo.
+
+*** Obtención del archivo
+Ahora desarrollamos el método estático getFile que recibirá la url del archivo y el nombre con el que será guardado en el disco
+
+\begin{verbatim}
+public static void getFile(String url, String filename){
+
+    try{
+        URL url = new URL(url);
+
+        try (
+            BufferedInputStream in = new BufferedInputStream(
+                url.openStream()
+            );
+
+            FileOutputStream fileOutputStream = new FileOutputStream(filename)
+        )
+        {
+            byte dataBuffer[] = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1)
+            {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            // handle exception
+        }
+
+    } catch (Exception e){}
+}
+\end{verbatim}
+
+Primeramente crearemos una instancia de la clase URL,
+con la que crearemos un stream, que pasremos como parámetro de un BufferedInputStream.
+El stream será leído desde el servidor byte a byte, y quedará almacenado en memoria,
+para guardarlo en un archivo, usaremos la clase FileOutputStream,
+que almacenará el stream en un archivo con el nombre que le pasemos,
+después de que este termine de descargarse desde el servidor.
 
 *** Entrada y salida
-Para obtener la url desde la línea de comandos, tendremos que obtener los parámetros desde stdin.
-Podremos obtenerlos desde el método main mediante el parámetro args,
-que devuelve un vector de cadenas, del que necesitaremos el primer elemento.
+La entrada de la url debe obtenerse desde la línea de comandos
+y ya que la respuesta de la petición será un archivo,
+almacenaremos este en un archivo en el computador del cliente,
+con un nombre de archivo que también obtendremos de la línea de comandos.
+
+Para obtener la url y el nombre del archivo desde la línea de comandos,
+tendremos que obtener los parámetros desde stdin.
+Podremos hacer esto desde el método main mediante el parámetro args,
+que devuelve un vector de cadenas, del que necesitaremos los primeros dos elementos.
 
 \begin{verbatim}
 public static void main(String[] args) {
 
     String url = args[0];
-    System.out.println(url);
+    String filename = args[1];
 }
 \end{verbatim}
 
-** Cliente NodeJs
-Desarrollo del cliente en Nodejs
+Seguidamente, ya obtenidos estos dos datos,
+podremos llamar a la función estática getFile que definimos en la clase Client,
+para esto, añadimos una línea de código de modo que nuestro método main queda como sigue:
+
+\begin{verbatim}
+public static void main(String[] args) {
+
+    String url = args[0];
+    String filename = args[1];
+
+    Client.getFile(url, filename);
+}
+\end{verbatim}
+
+Con esto el programa está listo para ser compilado.
+
+*** Compilación
+Para compilar una clase java, usaremos el programa javac,
+ejecutando el comando:
+
+\begin{verbatim}
+javac Client.java
+\end{verbatim}
+
+Con lo que se generará un nuevo archivo Client.class,
+que podremos ejecutar con java ejecutando el siguiente comando:
+
+\begin{verbatim}
+java Client argumento1 argumanto2
+\end{verbatim}
+
+Tras la compilación, pasaremos a realizar algunas pruebas del programa.
+
+*** Pruebas
+Después de compilar el archivo Client.java, podremos ejecutarlo,
+pasando como parámetros la url del archivo que queremos obtener y el nombre con que guardaremos el archivo obtenido.
+Ejecutamos el comando en la consola:
+
+[[./comando.png]]
+
+Tras la ejecución, deberíamos obtener el archivo file.txt en el directorio desde el que ejecutamos el comando:
+
+[[./archivo.png]]
