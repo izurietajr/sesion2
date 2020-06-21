@@ -1,0 +1,17 @@
+#+TITLE: Inform sesión de programación 2. Node Js
+#+AUTHOR: Jesus Rodolfo Izurieta Veliz
+
+* Introducción
+Desarrollo de un servidor web que atienda peticiones de archivos con diferentes formatos (ASCII, JSON, HTML, PDF).
+Los archivos estarán distribuidos en dos únicos directorios: /pub y /doc).
+Cuando el servidor reciba una petición GET con la ruta ‘/doc/', deberá recuperarlo desde el directorio /doc;
+el mismo procedimiento deberá seguirse con la ruta ‘/pub'. Por ejemplo: /pub/test.html
+
+El servidor deberá verificar si el archivo solicitado existe antes de recuperarlo,
+de lo contrario deberá retornar una página comunicando esta condición de error (Codigo 404 – Not Found).
+Use los módulos “http”, “url” y “fs” de Node.
+
+* Pruebas
+Use un navegador para probar su servidor incluyendo distintos formatos y directorios.
+
+Finalmente, escriba un informe sobre el trabajo realizado que deberá estar listo antes del domingo 21 de junio.
