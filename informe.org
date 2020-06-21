@@ -1,7 +1,9 @@
 #+TITLE: Informe sesión de programación 2. Node Js
 #+AUTHOR: Jesus Rodolfo Izurieta Veliz
+\pagebreak
+* Introducción
+*Enunciado del proyecto*
 
-* Descripción del proyecto
 Desarrollo de un servidor web que atienda peticiones de archivos con diferentes formatos (ASCII, JSON, HTML, PDF).
 Los archivos estarán distribuidos en dos únicos directorios: /pub y /doc).
 Cuando el servidor reciba una petición GET con la ruta ‘/doc/', deberá recuperarlo desde el directorio /doc;
@@ -13,7 +15,7 @@ Use los módulos “http”, “url” y “fs” de Node.
 
 * Descripción
 Para la creación del servidor con NodeJs, usaremos algunos módulos de npm,
-entre ellos, node, express, url y body-parser; los instalamos con el manejador de módulos npm.
+entre ellos, url y fs; los instalamos con el manejador de módulos npm.
 
 ** Módulos importados
 
@@ -27,18 +29,132 @@ de modo que con ayuda de fs seremos capaces de acceder a directorios y archivos 
 
 * Desarrollo
 
-Contiene las vistas de la aplicación, separadas del archivo app.js que representa el servidor node,
-manteniendo una estructura modular para una mejor organización del código del proyecto.
+** Servidor http
+Creamos el archivo app.js, donde pondremos el código del servidor,
+lo primero que incluiremos en el documento serán los módulos importados que usaremos:
 
 \begin{verbatim}
-    static fileView (req, res) {
-        // GET
-        // información del servicio
-        res.send("file view response")
-    }
+const http = require('http');
+const url  = require('url');
+const fs   = require('fs');
+const path = require('path');
 \end{verbatim}
 
-* Pruebas
-Use un navegador para probar su servidor incluyendo distintos formatos y directorios.
+Http es el módulo que nos permitirá recibir y responder a peticiones http.
+Url contiene utilidades para resolución de urls.
+Fs nos dará acceso al sistema de archivos del sistema operativo.
+Path nos provee utilidades para el correcto manejo de direcciones de archivos.
 
-Finalmente, escriba un informe sobre el trabajo realizado que deberá estar listo antes del domingo 21 de junio.
+A continuación definimos algunas variables para configurar el servidor:
+
+\begin{verbatim}
+const serverHostname  = 'http://localhost:8080/';
+const serverPort = 8080;
+\end{verbatim}
+
+Nos servirán para definir el nombre del host y el número de puerto de nuestro servidor web.
+Seguidamente desarrollamos el servidor, donde aceptaremos las peticiones usando el módulo http.
+
+\begin{verbatim}
+http.createServer()
+\end{verbatim}
+
+La función createServer del módulo http recibe una función con dos parámetros,
+dos objetos: request y response que contienen la información de la petición
+y proveen un medio para enviar una respuesta, respecticamente.
+Esta función nos devolverá un objeto del que podremos llamar a su método listen con el puerto y el nombre del host,
+para que el servidor escuche peticiones.
+
+\begin{verbatim}
+http.createServer(/* código del servidor */)
+    .listen(serverPort, serverHostname);
+\end{verbatim}
+
+** Respuesta a peticiones de archivos
+La función que pasaremos como parámetro de http.createServer contendrá el código
+para responder a las peticiones realizadas por un cliente como un navegador.
+
+\begin{verbatim}
+function server (req, res) { /* código de servidor */ }
+\end{verbatim}
+
+Primeramente obtendremos la url y la convertiremos en un objeto de tipo URL,
+para poder usar los métodos que implementa esta clase.
+Creamos una nueva instancia de la clase URL, a la que pasamos como parámetros la url obtenida por la petición
+y el nombre del host del servidor, variable que instanciamos anteriormente.
+
+\begin{verbatim}
+let request_url = new URL(req.url, serverHostname);
+\end{verbatim}
+
+Usaremos el método join de la clase path, para obtener la dirección local,
+concatenando el directorio actual ('.') y la dirección del archivo que devolveremos,
+que corresponde a la dirección de la url de la petición,
+valor que podremos encontrar en el atributo pathname del objeto URL.
+
+\begin{verbatim}
+let filename = path.join('.', request_url.pathname);
+\end{verbatim}
+
+Finalmente, con el nombre y dirección del archivo al que se quiere acceder,
+usamos el módulo fs para obtener el archivo (si existe),
+Para esto usaremos el método readFile de fs, que recibe como parámetros el nombre del archivo,
+el tipo de codificación, y un callback, una función que nos dará acceso a dos parámetros:
+error, nos devolverá un error si no se puede obtener o abrir el archivo,
+y data, que nos devolverá el contenido del archivo si este fue encontrado y pudo ser accedido sin problemas.
+
+\begin{verbatim}
+fs.readFile(filename, 'utf-8', function(err, data) {
+    if(err){
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 404;
+        let message = {
+            code: "404: Not Found",
+            message: "No se encuentra el archivo " + filename
+        }
+        res.end(JSON.stringify(message));
+    }
+    else {
+        res.end(data);
+    }
+});
+\end{verbatim}
+
+En caso de que no haya errores en la lectura del archivo, el parámetro err será nulo,
+por lo que preguntamos si es un valor definido en un if.
+Si 'error' no es nulo, responderemos con un mensaje de error en formato json,
+para esto, definimos la cabecera de la respuesta como 'application/json' y
+el statusCode a 404
+
+\begin{verbatim}
+res.setHeader('Content-Type', 'application/json');
+res.statusCode = 404;
+let message = {
+    code: "404: Not Found",
+    message: "No se encuentra el archivo " + filename
+}
+res.end(JSON.stringify(message));
+\end{verbatim}
+
+A continuación creamos un objeto message que contendrá el código de error 404
+y un mensaje en texto que será legible por la persona que acceda al servidor.
+Enviaremos este mensaje como parámetro de la función end del objeto response,
+no sin antes convertirlo en una cadena con la función stringify del módulo JSON.
+
+Finalemnte en caso de que el objeto sea encontrado y pueda ser leído,
+enviamos su contenido, almacenado en la variable data.
+
+* Observaciones
+Se debe implementar algún mecanismo de seguridad en este servidor, ya que al responder a cualquier url en la petición,
+cualquier archivo es accesible, incluyendo código fuente del servidor o cualquier otro archivo dentro
+del mismo directorio.
+
+* Pruebas
+Usaremos un navegador para probar el servidor, incluiremos distintos formatos de archivos y directorios.
+
+Creamos un archivo index.html en el directorio doc y realizando la petición http://localhost:8080/doc/index.html obtenemos:
+
+[[./captura.png]]
+
+De igual manera, con un archivo de texto, obtenemos el contenido de este:
+[[./captura2.png]]
