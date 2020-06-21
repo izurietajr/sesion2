@@ -1,6 +1,8 @@
 #+TITLE: Informe sesión de programación 2. Node Js
 #+AUTHOR: Jesus Rodolfo Izurieta Veliz
+
 \pagebreak
+
 * Introducción
 *Enunciado del proyecto*
 

@@ -1,0 +1,50 @@
+#+TITLE: Sesión de desarrollo 2. Java y Node Js
+#+AUTHOR: Jesus Rodolfo Izurieta Veliz
+
+\pagebreak
+
+* Introducción
+*Enunciado del proyecto*
+
+Desarrolle los dos programas que se indican a continuación y redacte un informe que avale las soluciones obtenidas y el trabajo realizado.
+
+1. Cliente para download: Desarrolle un cliente en Java para descargar archivos de su servidor Node.JS. Su programa cliente deberá recibir como argumento la URL del archivo que se desea descargar.
+Ejemplo: java miprog http://localhost/doc/miarchivo.pdf
+Verifique que la descarga es correcta. Por ejemplo, si el archivo que solicitó es un pdf debería ser abierto por Acrobat.
+
+2. Cliente Node: Probemos ahora, las capacidades de Node.js para desarrollar un programa cliente, escriba un programa en Node.js con las mismas características que el descrito en el apartado anterior. Se sugiere usar los módulos “http”, “url” y “fs”.
+
+* Desarrollo
+
+** Cliente Java
+Primeramente creamos la clase Client
+*** Bibliotecas importadas
+Para el desarrollo del cliente necesitaremos las siguientes bibliotecas:
+
+\begin{verbatim}
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+\end{verbatim}
+
+Las clases BufferedReader y InputStreamReader nos permitirán manejar el stream de datos
+que interpretaremos como el archivo descargado desde el servidor.
+HttpURLConnection nos permitirá realizar una conexión http con el servidor,
+usando la url que instanciaremos usando la clase URL.
+
+*** Entrada y salida
+Para obtener la url desde la línea de comandos, tendremos que obtener los parámetros desde stdin.
+Podremos obtenerlos desde el método main mediante el parámetro args,
+que devuelve un vector de cadenas, del que necesitaremos el primer elemento.
+
+\begin{verbatim}
+public static void main(String[] args) {
+
+    String url = args[0];
+    System.out.println(url);
+}
+\end{verbatim}
+
+** Cliente NodeJs
+Desarrollo del cliente en Nodejs

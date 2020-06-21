@@ -1,4 +1,4 @@
-% Created 2020-06-21 Sun 15:58
+% Created 2020-06-21 Sun 16:58
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -30,8 +30,9 @@
 \tableofcontents
 
 \pagebreak
+
 \section{Introducción}
-\label{sec:orgf6cc251}
+\label{sec:org09fb854}
 \textbf{Enunciado del proyecto}
 
 Desarrollo de un servidor web que atienda peticiones de archivos con diferentes formatos (ASCII, JSON, HTML, PDF).
@@ -44,28 +45,28 @@ de lo contrario deberá retornar una página comunicando esta condición de erro
 Use los módulos “http”, “url” y “fs” de Node.
 
 \section{Descripción}
-\label{sec:orgdb98373}
+\label{sec:org60b8877}
 Para la creación del servidor con NodeJs, usaremos algunos módulos de npm,
 entre ellos, url y fs; los instalamos con el manejador de módulos npm.
 
 \subsection{Módulos importados}
-\label{sec:org4968f15}
+\label{sec:org3fc123c}
 
 \subsubsection{Url}
-\label{sec:org828c130}
+\label{sec:org803fb4d}
 El módulo url de node, nos provee utilidades para la resolución de urls.
 Para esto, cuenta con la clase url, lo que añade atributos que no serían accesibles en el caso de usar únicamente cadenas de texto.
 
 \subsubsection{Fs}
-\label{sec:orgabaaff6}
+\label{sec:org95ed0de}
 El módulo fs implementa una interfaz del sistema de archivos del sistema operativo para node,
 de modo que con ayuda de fs seremos capaces de acceder a directorios y archivos de nuestro servidor.
 
 \section{Desarrollo}
-\label{sec:org5755675}
+\label{sec:org11739bc}
 
 \subsection{Servidor http}
-\label{sec:orgc8b7765}
+\label{sec:org3f0dd20}
 Creamos el archivo app.js, donde pondremos el código del servidor,
 lo primero que incluiremos en el documento serán los módulos importados que usaremos:
 
@@ -107,7 +108,7 @@ http.createServer(/* código del servidor */)
 \end{verbatim}
 
 \subsection{Respuesta a peticiones de archivos}
-\label{sec:org67dbc50}
+\label{sec:org401bc76}
 La función que pasaremos como parámetro de http.createServer contendrá el código
 para responder a las peticiones realizadas por un cliente como un navegador.
 
@@ -182,13 +183,13 @@ Finalemnte en caso de que el objeto sea encontrado y pueda ser leído,
 enviamos su contenido, almacenado en la variable data.
 
 \section{Observaciones}
-\label{sec:orgcb4a948}
+\label{sec:org052d339}
 Se debe implementar algún mecanismo de seguridad en este servidor, ya que al responder a cualquier url en la petición,
 cualquier archivo es accesible, incluyendo código fuente del servidor o cualquier otro archivo dentro
 del mismo directorio.
 
 \section{Pruebas}
-\label{sec:orgbe22abf}
+\label{sec:org60cbfb6}
 Usaremos un navegador para probar el servidor, incluiremos distintos formatos de archivos y directorios.
 
 Creamos un archivo index.html en el directorio doc y realizando la petición \url{http://localhost:8080/doc/index.html} obtenemos:
