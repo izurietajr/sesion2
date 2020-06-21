@@ -1,7 +1,5 @@
-#+TITLE: Proyecto LAB 273
+#+TITLE: Segunda sesión de desarrollo Node Js
 #+AUTHOR: Jesus Rodolfo Izurieta Veliz
-
-* Segunda sesión de desarrollo Node Js
 
 Desarrollo de un servidor web que atienda peticiones de archivos con diferentes formatos (ASCII, JSON, HTML, PDF).
 Los archivos estarán distribuidos en dos únicos directorios: /pub y /doc).
