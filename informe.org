@@ -1,7 +1,7 @@
-#+TITLE: Inform sesión de programación 2. Node Js
+#+TITLE: Informe sesión de programación 2. Node Js
 #+AUTHOR: Jesus Rodolfo Izurieta Veliz
 
-* Introducción
+* Descripción del proyecto
 Desarrollo de un servidor web que atienda peticiones de archivos con diferentes formatos (ASCII, JSON, HTML, PDF).
 Los archivos estarán distribuidos en dos únicos directorios: /pub y /doc).
 Cuando el servidor reciba una petición GET con la ruta ‘/doc/', deberá recuperarlo desde el directorio /doc;
@@ -11,17 +11,32 @@ El servidor deberá verificar si el archivo solicitado existe antes de recuperar
 de lo contrario deberá retornar una página comunicando esta condición de error (Codigo 404 – Not Found).
 Use los módulos “http”, “url” y “fs” de Node.
 
-* Desarrollo
+* Descripción
 Para la creación del servidor con NodeJs, usaremos algunos módulos de npm,
 entre ellos, node, express, url y body-parser; los instalamos con el manejador de módulos npm.
 
-** Módulo Url
+** Módulos importados
+
+*** Url
 El módulo url de node, nos provee utilidades para la resolución de urls.
 Para esto, cuenta con la clase url, lo que añade atributos que no serían accesibles en el caso de usar únicamente cadenas de texto.
 
-** Módulo fs
+*** Fs
 El módulo fs implementa una interfaz del sistema de archivos del sistema operativo para node,
 de modo que con ayuda de fs seremos capaces de acceder a directorios y archivos de nuestro servidor.
+
+* Desarrollo
+
+Contiene las vistas de la aplicación, separadas del archivo app.js que representa el servidor node,
+manteniendo una estructura modular para una mejor organización del código del proyecto.
+
+\begin{verbatim}
+    static fileView (req, res) {
+        // GET
+        // información del servicio
+        res.send("file view response")
+    }
+\end{verbatim}
 
 * Pruebas
 Use un navegador para probar su servidor incluyendo distintos formatos y directorios.

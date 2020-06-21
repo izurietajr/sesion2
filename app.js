@@ -1,16 +1,33 @@
 const http = require('http');
-const url = require('url');
-const fs = require('fs');
+const url  = require('url');
+const fs   = require('fs');
+const path = require('path');
 
 
+const serverUrl  = 'http://localhost:8080/';
+const serverPort = 8080;
 
-http.createServer(function (req, res) {
+http.createServer(function(req, res) {
 
-    res.writeHead(200, {'Content-Type': 'text/html'});
+    console.log("nueva petición:");
 
-    var q = url.parse(req.url, true).query;
-    console.log(q);
-    var txt = q.year + " " + q.month;
-    res.end(txt);
+    let request_url = new URL(req.url, serverUrl);
+    let filename = path.join('.', request_url.pathname);
+    console.log(filename);
 
-}).listen(8080);
+    fs.readFile(filename, 'utf-8', function(err, data) {
+        if(err){
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 404;
+            let message = {
+                code: "404: Not Found",
+                message: "No se encuentra el archivo " + filename
+            }
+            res.end(JSON.stringify(message));
+        }
+        else {
+            res.end(data);
+        }
+    });
+
+}).listen(serverPort);

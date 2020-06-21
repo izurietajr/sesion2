@@ -1,4 +1,4 @@
-% Created 2020-06-20 Sat 23:33
+% Created 2020-06-21 Sun 13:19
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -16,10 +16,10 @@
 \usepackage{hyperref}
 \author{Jesus Rodolfo Izurieta Veliz}
 \date{\today}
-\title{Inform sesión de programación 2. Node Js}
+\title{Informe sesión de programación 2. Node Js}
 \hypersetup{
  pdfauthor={Jesus Rodolfo Izurieta Veliz},
- pdftitle={Inform sesión de programación 2. Node Js},
+ pdftitle={Informe sesión de programación 2. Node Js},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 26.3 (Org mode 9.4)}, 
@@ -30,8 +30,8 @@
 \tableofcontents
 
 
-\section{Introducción}
-\label{sec:org22ee969}
+\section{Descripción del proyecto}
+\label{sec:org9a77426}
 Desarrollo de un servidor web que atienda peticiones de archivos con diferentes formatos (ASCII, JSON, HTML, PDF).
 Los archivos estarán distribuidos en dos únicos directorios: \emph{pub y /doc).
 Cuando el servidor reciba una petición GET con la ruta ‘/doc}', deberá recuperarlo desde el directorio /doc;
@@ -42,22 +42,41 @@ de lo contrario deberá retornar una página comunicando esta condición de erro
 Use los módulos “http”, “url” y “fs” de Node.
 
 \section{Desarrollo}
-\label{sec:orgc9d682c}
+\label{sec:org26165d8}
 Para la creación del servidor con NodeJs, usaremos algunos módulos de npm,
 entre ellos, node, express, url y body-parser; los instalamos con el manejador de módulos npm.
 
-\subsection{Módulo Url}
-\label{sec:org89a6d9f}
+\subsection{Módulos importados}
+\label{sec:org5c55835}
+
+\subsubsection{Url}
+\label{sec:orgd33aeaa}
 El módulo url de node, nos provee utilidades para la resolución de urls.
 Para esto, cuenta con la clase url, lo que añade atributos que no serían accesibles en el caso de usar únicamente cadenas de texto.
 
-\subsection{Módulo fs}
-\label{sec:orgd053c5b}
+\subsubsection{Fs}
+\label{sec:org8ef096d}
 El módulo fs implementa una interfaz del sistema de archivos del sistema operativo para node,
 de modo que con ayuda de fs seremos capaces de acceder a directorios y archivos de nuestro servidor.
 
+\subsection{Módulos desarrollados}
+\label{sec:org1f60753}
+
+\subsubsection{Views}
+\label{sec:org8426448}
+Contiene las vistas de la aplicación, separadas del archivo app.js que representa el servidor node,
+manteniendo una estructura modular para una mejor organización del código del proyecto.
+
+\begin{verbatim}
+    static fileView (req, res) {
+        // GET
+        // información del servicio
+        res.send("file view response")
+    }
+\end{verbatim}
+
 \section{Pruebas}
-\label{sec:org223f616}
+\label{sec:org8f2dce6}
 Use un navegador para probar su servidor incluyendo distintos formatos y directorios.
 
 Finalmente, escriba un informe sobre el trabajo realizado que deberá estar listo antes del domingo 21 de junio.
