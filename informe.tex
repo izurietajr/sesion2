@@ -1,4 +1,4 @@
-% Created 2020-06-20 Sat 22:13
+% Created 2020-06-20 Sat 23:33
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -31,7 +31,7 @@
 
 
 \section{Introducción}
-\label{sec:org745e1cd}
+\label{sec:org22ee969}
 Desarrollo de un servidor web que atienda peticiones de archivos con diferentes formatos (ASCII, JSON, HTML, PDF).
 Los archivos estarán distribuidos en dos únicos directorios: \emph{pub y /doc).
 Cuando el servidor reciba una petición GET con la ruta ‘/doc}', deberá recuperarlo desde el directorio /doc;
@@ -41,7 +41,24 @@ El servidor deberá verificar si el archivo solicitado existe antes de recuperar
 de lo contrario deberá retornar una página comunicando esta condición de error (Codigo 404 – Not Found).
 Use los módulos “http”, “url” y “fs” de Node.
 
+\section{Desarrollo}
+\label{sec:orgc9d682c}
+Para la creación del servidor con NodeJs, usaremos algunos módulos de npm,
+entre ellos, node, express, url y body-parser; los instalamos con el manejador de módulos npm.
+
+\subsection{Módulo Url}
+\label{sec:org89a6d9f}
+El módulo url de node, nos provee utilidades para la resolución de urls.
+Para esto, cuenta con la clase url, lo que añade atributos que no serían accesibles en el caso de usar únicamente cadenas de texto.
+
+\subsection{Módulo fs}
+\label{sec:orgd053c5b}
+El módulo fs implementa una interfaz del sistema de archivos del sistema operativo para node,
+de modo que con ayuda de fs seremos capaces de acceder a directorios y archivos de nuestro servidor.
+
 \section{Pruebas}
-\label{sec:org495b983}
-Pruebas: Use un navegador para probar su servidor incluyendo distintos formatos y directorios.
+\label{sec:org223f616}
+Use un navegador para probar su servidor incluyendo distintos formatos y directorios.
+
+Finalmente, escriba un informe sobre el trabajo realizado que deberá estar listo antes del domingo 21 de junio.
 \end{document}

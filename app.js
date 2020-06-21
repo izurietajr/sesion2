@@ -1,21 +1,16 @@
-const bodyParser = require('body-parser');
 const http = require('http');
-const https = require('https');
+const url = require('url');
 const fs = require('fs');
 
 
-const hostname = '127.0.0.1';
-const http_port = 8080;
-const https_port = 8443;
 
+http.createServer(function (req, res) {
 
-var app = express();
+    res.writeHead(200, {'Content-Type': 'text/html'});
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+    var q = url.parse(req.url, true).query;
+    console.log(q);
+    var txt = q.year + " " + q.month;
+    res.end(txt);
 
-var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
-
-httpServer.listen(http_port);
-httpsServer.listen(https_port);
+}).listen(8080);

@@ -11,6 +11,18 @@ El servidor deberá verificar si el archivo solicitado existe antes de recuperar
 de lo contrario deberá retornar una página comunicando esta condición de error (Codigo 404 – Not Found).
 Use los módulos “http”, “url” y “fs” de Node.
 
+* Desarrollo
+Para la creación del servidor con NodeJs, usaremos algunos módulos de npm,
+entre ellos, node, express, url y body-parser; los instalamos con el manejador de módulos npm.
+
+** Módulo Url
+El módulo url de node, nos provee utilidades para la resolución de urls.
+Para esto, cuenta con la clase url, lo que añade atributos que no serían accesibles en el caso de usar únicamente cadenas de texto.
+
+** Módulo fs
+El módulo fs implementa una interfaz del sistema de archivos del sistema operativo para node,
+de modo que con ayuda de fs seremos capaces de acceder a directorios y archivos de nuestro servidor.
+
 * Pruebas
 Use un navegador para probar su servidor incluyendo distintos formatos y directorios.
 
